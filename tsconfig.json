@@ -18,7 +18,7 @@
             "node_modules/@types"
         ],
         "sourceMap": false,
-        "baseUrl": "./"
+        "baseUrl": "./",
     },
     "files": [
         "src/Bot.ts"

@@ -1,0 +1,26 @@
+{
+    "orga" : [
+        { 
+            "name" : "Cloud",
+            "url" : "https://cloud.mamoru.io"
+        },
+        {
+            "name" : "Notion",
+            "url" : "https://www.notion.so/telmele/T-O-M-P-L-O-Y-16eca8f2426b4d5385574302ab1ba412"
+        },
+        {
+            "name" : "Github",
+            "url" : "https://github.com/tomploy"
+        }
+    ],
+    "resources" : [
+        { 
+            "name" : "Hardware",
+            "url" : "https://www.notion.so/telmele/066ded214021450bb4154f911177084f?v=aa1f1fe7b2124068827bd595242371a1"
+        },
+        {
+            "name" : "Ressources",
+            "url" : "https://telmele.notion.site/RESSOURCES-c041e50149a94e5aa0aff6ca3e8cf8ce"
+        }
+    ]
+}

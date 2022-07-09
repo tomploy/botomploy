@@ -1,4 +1,8 @@
+import path from "node:path"
+import fs from "node:fs"
 import { Command } from "./Command";
-import { Hello } from "./commands/Hello";
+import { Links } from "./commands/Links";
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
 
-export const Commands: Command[] = [Hello]; 
+export const Commands: Command[] = [Links]; 
