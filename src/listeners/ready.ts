@@ -9,6 +9,6 @@ export default (client: Client): void => {
 
         await client.application.commands.set(Commands);
 
-        console.log(`${client.user.username} is online`);
+        console.log(`Bot is online`);
     });
 }; 

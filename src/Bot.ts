@@ -3,7 +3,6 @@ import interactionCreate from "./listeners/interactionCreate";
 import ready from "./listeners/ready";
 import * as dotenv from 'dotenv';
 dotenv.config()
-console.log(process.env)
 
 console.log("Bot is starting...");
 

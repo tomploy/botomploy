@@ -1,4 +1,4 @@
-import { BaseCommandInteraction, Client, MessageEmbed } from "discord.js";
+import { CommandInteraction, Client, MessageEmbed } from "discord.js";
 import { Command } from "../Command";
 import links from "../links.json"
 
@@ -11,7 +11,7 @@ export const Links: Command = {
     name: "links",
     description: "give important links",
     type: "CHAT_INPUT",
-    run: async (client: Client, interaction: BaseCommandInteraction) => {
+    run: async (client: Client, interaction: CommandInteraction) => {
         
         const embed = new MessageEmbed()
             .setTitle("__L I N K S__")
@@ -20,8 +20,8 @@ export const Links: Command = {
             .addField("ressources", getLinks(links.resources), true)
 
 
-        await interaction.followUp({
-            ephemeral: true,
+        await interaction.reply({
+            ephemeral: false,
             embeds: [embed]
         });
     }
