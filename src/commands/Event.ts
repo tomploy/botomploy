@@ -1,6 +1,7 @@
 import { CommandInteraction, Client, MessageEmbed, TextChannel } from "discord.js";
 import { blockQuote } from "@discordjs/builders";
 import { Command } from "../Command";
+import { getMessage } from "../utils/message";
 
 export const Event: Command = {
     name: "event",
@@ -55,15 +56,10 @@ export const Event: Command = {
                     embeds: [embed],
                     fetchReply: true,
                 }).then(async value => {
-                    const channel = await client.channels.fetch(interaction.channelId) as TextChannel;
-                    const msg = await channel.messages.fetch(value.id);
-                    if (msg !== undefined) {
-                        await msg.react("995720930426900520");
-                        await msg.react("995720931420934286");
-                        await msg.react("995720932456935454");
-                    } else {
-                        console.error("Impossible de fetch le message");
-                    }
+                    const msg = await getMessage(client, interaction, value);
+                    await msg.react("995720930426900520");
+                    await msg.react("995720931420934286");
+                    await msg.react("995720932456935454");
                 });
                 break;
             case "poll":
