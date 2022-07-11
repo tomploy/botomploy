@@ -1,7 +1,5 @@
-import { CommandInteraction, Client, MessageEmbed, Message } from "discord.js";
-import { APIMessage } from "discord-api-types/v9"
-import { blockQuote } from '@discordjs/builders'
-import { InteractionResponseTypes } from "discord.js/typings/enums";
+import { CommandInteraction, Client, MessageEmbed, TextChannel } from "discord.js";
+import { blockQuote } from "@discordjs/builders";
 import { Command } from "../Command";
 
 export const Event: Command = {
@@ -52,30 +50,21 @@ export const Event: Command = {
                         { name: "<:checkmark:995720930426900520> Disponible (0)", value: blockQuote(" \n \n \n"), inline: true },
                         { name: "<:crossmark:995720931420934286> Indisponible (0)", value: blockQuote(" \n \n \n"), inline: true },
                         { name: "<:questionmark:995720932456935454> Peut-être (0)", value: blockQuote(" \n \n \n"), inline: true },
-                    )
+                    );
                 interaction.reply({
                     embeds: [embed],
-                    fetchReply: true
-                }).then(value => {
-                    console.log(value);
-                    if(value instanceof Message<boolean>) {
-                        value.react("995720930426900520");
-                        value.react("995720931420934286");
-                        value.react("995720932456935454");
+                    fetchReply: true,
+                }).then(async value => {
+                    const channel = await client.channels.fetch(interaction.channelId) as TextChannel;
+                    const msg = await channel.messages.fetch(value.id);
+                    if (msg !== undefined) {
+                        await msg.react("995720930426900520");
+                        await msg.react("995720931420934286");
+                        await msg.react("995720932456935454");
+                    } else {
+                        console.error("Impossible de fetch le message");
                     }
-                    // value.react("995720930426900520");
-                })
-                
-
-                // try {
-                //     // if(message instanceof Message<boolean>) {
-                //     await msg.react("995720930426900520");
-                //     await msg.react("995720931420934286");
-                //     await msg.react("995720932456935454");
-                //     // }
-                // } catch(error) {
-                //     console.error('One of the emojis failed to react:', error);
-                // }
+                });
                 break;
             case "poll":
                 break;
