@@ -1,0 +1,27 @@
+{
+  "name": "botomploy",
+  "version": "0.0.1",
+  "description": "tomploy td bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomploy/botomploy.git"
+  },
+  "author": "tomploy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomploy/botomploy/issues"
+  },
+  "homepage": "https://github.com/tomploy/botomploy#readme",
+  "dependencies": {
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.24.0"
+  }
+}
