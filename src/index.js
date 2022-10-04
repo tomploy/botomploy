@@ -15,6 +15,8 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
+
+
 client.once('ready', () => {
 	console.log('Ready!');
 });
@@ -23,6 +25,7 @@ client.on('interactionCreate', async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 
 	const command = client.commands.get(interaction.commandName);
+	console.log(command);
 
 	if (!command) return;
 
@@ -33,7 +36,5 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
-
-
 
 client.login(process.env.DISCORD_TOKEN);

@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
-    data : new SlashCommandBuilder()
+    data: new SlashCommandBuilder()
         .setName("event")
         .setDescription("manage collective events"),
     async execute(interaction) {
@@ -15,8 +15,7 @@ module.exports = {
                     .setCustomId('reunion')
                     .setLabel('reunion')
             );
-        
-            await interaction.reply({components: [row] });
+        await interaction.reply({ components: [row] });
     }
         
 }
