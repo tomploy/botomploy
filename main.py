@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 from emojis import EMOJI_NUM, EMOJI_UTIL
-from sondage import wait_for_reactions
+from sondage import send_msg
 
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
@@ -25,22 +25,6 @@ async def ping(ctx):
 
 @client.command(name="vjam")
 async def sondage(ctx, *props):
-    content = ""
-    for i in range(len(props)):
-        content += EMOJI_NUM[i] + " " + props[i] + "\n"
-
-    content += EMOJI_UTIL.get("crossmark") + " je suis nul et je peux pas venir"
-    embed = discord.Embed(
-        title="Sondage pour VJam!!!",
-        color=discord.Color.green(),
-        description=content
-    )
-    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
-    sondage = await ctx.send(embed=embed)
-    for i in range(len(props)):
-        await sondage.add_reaction(EMOJI_NUM[i])
-
-    await sondage.add_reaction(EMOJI_UTIL.get("crossmark"))
-    await wait_for_reactions(ctx, sondage, client, props)
+    await send_msg(ctx, client, props)
 
 client.run(token)

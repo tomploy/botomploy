@@ -4,6 +4,25 @@ from discord.ext import commands
 
 from emojis import EMOJI_NUM, EMOJI_UTIL
 
+async def send_msg(ctx, client, props):
+    content = ""
+    for i in range(len(props)):
+        content += EMOJI_NUM[i] + " " + props[i] + "\n"
+
+    content += EMOJI_UTIL.get("crossmark") + " je suis nul et je peux pas venir"
+    embed = discord.Embed(
+        title="Sondage pour VJam!!!",
+        color=discord.Color.green(),
+        description=content
+    )
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
+    sondage = await ctx.send(embed=embed)
+    for i in range(len(props)):
+        await sondage.add_reaction(EMOJI_NUM[i])
+
+    await sondage.add_reaction(EMOJI_UTIL.get("crossmark"))
+    await wait_for_reactions(ctx, sondage, client, props)
+
 async def wait_for_reactions(ctx, msg, client, props):
     await sleep(86400) # 24 heures
     cached_msg = discord.utils.get(client.cached_messages, id=msg.id)
