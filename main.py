@@ -23,7 +23,7 @@ async def on_ready():
 async def ping(ctx):
     await ctx.channel.send("pong")
 
-@client.command(name="vjam")
+@client.command(name="vjam", help="Créé un sondage pour une VJam. Si vous voulez automatiquement créer un événement discord à la suite du sondage, il faut rentrer les paramètres sous la forme \"JJ-MM-AAAA_hh:mm\"")
 async def sondage(ctx, *props):
     await send_msg(ctx, client, props)
 
