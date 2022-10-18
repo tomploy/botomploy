@@ -2,7 +2,7 @@ import discord
 
 EMOJI_NUM = ["0\u20E3", "1\u20E3", "2\u20E3", "3\u20E3", "4\u20E3", "5\u20E3", "6\u20E3", "7\u20E3", "8\u20E3", "9\u20E3"]
 
-poll_number_emojis = [
+numbers_emojis = [
     discord.PartialEmoji(name="1️⃣"),
     discord.PartialEmoji(name="2️⃣"),
     discord.PartialEmoji(name="3️⃣"),
@@ -12,6 +12,30 @@ poll_number_emojis = [
     discord.PartialEmoji(name="7️⃣"),
     discord.PartialEmoji(name="8️⃣"),
     discord.PartialEmoji(name="9️⃣"),
+]
+
+hearts_emojis = [
+    discord.PartialEmoji(name="❤️"),
+    discord.PartialEmoji(name="🧡"),
+    discord.PartialEmoji(name="💛"),
+    discord.PartialEmoji(name="💚"),
+    discord.PartialEmoji(name="💙"),
+    discord.PartialEmoji(name="💜"),
+    discord.PartialEmoji(name="🖤"),
+    discord.PartialEmoji(name="🤍"),
+    discord.PartialEmoji(name="🤎"),
+]
+
+circles_emojis = [
+    discord.PartialEmoji(name="🔴"),
+    discord.PartialEmoji(name="🟠"),
+    discord.PartialEmoji(name="🟡"),
+    discord.PartialEmoji(name="🟢"),
+    discord.PartialEmoji(name="🔵"),
+    discord.PartialEmoji(name="🟣"),
+    discord.PartialEmoji(name="⚫️"),
+    discord.PartialEmoji(name="⚪️"),
+    discord.PartialEmoji(name="🟤"),
 ]
 
 EMOJI_UTIL = {

@@ -1,17 +1,18 @@
 import os
+from pydoc import describe
 import sys
 from unicodedata import name
 from dotenv import load_dotenv
 
 import discord
-from discord import option
+from discord import OptionChoice, option, Option
 from discord.ext import commands
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from utils.emojis import poll_number_emojis, EMOJI_UTIL
+from utils.emojis import numbers_emojis, hearts_emojis, circles_emojis
 
 load_dotenv()
 
@@ -19,7 +20,8 @@ load_dotenv()
 class Poll(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.embed = "";
+        self.embed = ""
+        self.emoji_arr = []
         super().__init__()
 
     @commands.Cog.listener()
@@ -32,11 +34,11 @@ class Poll(commands.Cog):
         msg = channel.get_partial_message(payload.message_id)
 
 
-        field = self.embed.fields[poll_number_emojis.index(payload.emoji)]
+        field = self.embed.fields[self.emoji_arr.index(payload.emoji)]
         if(field.value == "Personne"):
-            field.value = member.name
+            field.value = payload.member.name
         else:
-            field.value += "\n" + member.name
+            field.value += "\n" + payload.member.name
         
         await msg.edit(embeds=[self.embed])
 
@@ -49,7 +51,7 @@ class Poll(commands.Cog):
         channel = guild.get_channel(payload.channel_id);
         msg = channel.get_partial_message(payload.message_id)
 
-        field = self.embed.fields[poll_number_emojis.index(payload.emoji)]
+        field = self.embed.fields[self.emoji_arr.index(payload.emoji)]
         start = field.value.find(member.name)
         stop = start + len(member.name)
         if len(field.value) > stop :
@@ -61,9 +63,19 @@ class Poll(commands.Cog):
     @option("title", description="Titre du sondage")
     @option("items", description='items du sondage (virgule en separateur)')
     @option("desc", description="description du sondage", default="")
-    async def poll(self, ctx: discord.ApplicationContext, title: str, items: str, desc: str):
+    async def poll(self, ctx: discord.ApplicationContext, title: str, items: str, desc: str, bullet: Option(str, "test", choices=[
+            OptionChoice(name="1️⃣ Nombres", value="numbers"),
+            OptionChoice(name="❤️ Coeurs", value="hearts"),
+            OptionChoice(name="🟣 Ronds", value="circles"),
+        ], default="circles")):
 
-        emoji_arr = poll_number_emojis;
+        if bullet == "numbers":
+            self.emoji_arr = numbers_emojis;
+        elif bullet == "hearts":
+            self.emoji_arr = hearts_emojis;
+        elif bullet == "circles":
+            self.emoji_arr = circles_emojis;
+
         items_arr = items.split(',')
 
         embed = discord.Embed(
@@ -73,7 +85,7 @@ class Poll(commands.Cog):
         )
 
         for i in range(len(items_arr)):
-            embed.add_field(name=str(emoji_arr[i]) + " " + items_arr[i], value="Personne", inline=True)
+            embed.add_field(name=str(self.emoji_arr[i]) + " " + items_arr[i], value="Personne", inline=True)
             # content +=  + "\n"
 
         # embed.add_field(name=EMOJI_UTIL.get("crossmark") + " Indispo", value="Personne", inline=True)
@@ -87,7 +99,7 @@ class Poll(commands.Cog):
         message = await sondage.original_response();
 
         for i in range(len(items_arr)):
-            await message.add_reaction(emoji_arr[i])
+            await message.add_reaction(self.emoji_arr[i])
 
         # await message.add_reaction(EMOJI_UTIL.get("crossmark"))
         # await wait_for_reactions(ctx, sondage, client, props)
