@@ -1,30 +1,39 @@
-import discord
 import os
+from os import listdir
+from os.path import realpath, split, join, splitext
 from dotenv import load_dotenv
+import discord
 from discord.ext import commands
 
-from emojis import EMOJI_NUM, EMOJI_UTIL
-from sondage import send_msg
 
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 serverId = os.getenv("SERVER_ID")
 clientId = os.getenv("CLIENT_ID")
 
-intents = discord.Intents.all()
 
-client = commands.Bot(command_prefix="!", intents=intents)
+class Bot(commands.Bot):
+    def __init__(self, *args, **kwargs):
+        intents = discord.Intents.default()
+        intents.message_content = True
+        super().__init__(
+            command_prefix="!", 
+            intents=intents)
+        
 
-@client.event
-async def on_ready():
-    print("Botomploy is up")
+    # async def setup_hook(self):
+        # await self.tree.sync(guild=discord.Object(serverId))
+        # print(f"Synced slash commands for {self.user}.");
+    
+    async def on_ready(self):
+        print("Botomploy is up")
 
-@client.command(name="ping")
-async def ping(ctx):
-    await ctx.channel.send("pong")
+    async def on_command_error(self, ctx, error):
+        await ctx.reply(error, ephemeral = True)
 
-@client.command(name="vjam", help="Créé un sondage pour une VJam. Si vous voulez automatiquement créer un événement discord à la suite du sondage, il faut rentrer les paramètres sous la forme \"JJ-MM-AAAA_hh:mm\"")
-async def sondage(ctx, *props):
-    await send_msg(ctx, client, props)
+bot = Bot()
 
-client.run(token)
+for item in listdir(join(split(realpath(__file__))[0], "cogs")):
+    bot.load_extension("cogs." + splitext(item)[0])
+
+bot.run(token)

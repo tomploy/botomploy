@@ -5,7 +5,7 @@ from discord.ext import commands
 from datetime import datetime
 from operator import itemgetter
 
-from emojis import EMOJI_NUM, EMOJI_UTIL
+from utils.emojis import EMOJI_NUM, EMOJI_UTIL
 
 async def send_msg(ctx, client, props):
     content = ""
