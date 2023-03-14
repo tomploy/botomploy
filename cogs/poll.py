@@ -1,10 +1,10 @@
+import discord
+from discord.ext import commands
+from discord.commands import Option
+from discord.commands import slash_command
+
 import os
 import sys
-from dotenv import load_dotenv
-
-import discord
-from discord import OptionChoice, PartialEmoji, option, Option
-from discord.ext import commands
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
@@ -12,9 +12,8 @@ sys.path.append(parent)
 
 from utils.emojis import emojis_db
 
-load_dotenv()
 class Poll(commands.Cog):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot):
         self.bot = bot
         self.polls = []
         super().__init__()
@@ -48,17 +47,17 @@ class Poll(commands.Cog):
         await msg.edit(embed=poll.embed)
 
     @commands.slash_command(guild_ids=[os.getenv("SERVER_ID")])
-    @option("title", description="Titre du sondage")
-    @option("items", description='items du sondage (virgule en separateur)')
-    @option("desc", description="description du sondage", default="")
+    @discord.option("title", description="Titre du sondage")
+    @discord.option("desc", description="description du sondage")
+    @discord.option("items", description='items du sondage (virgule en separateur)')
     async def poll(self, ctx: discord.ApplicationContext, 
         title: str, 
-        items: str, 
         desc: str, 
-        emojis: Option(str, "emojis", choices=[
-            OptionChoice(name="1️⃣ Nombres", value="numbers"),
-            OptionChoice(name="❤️ Coeurs", value="hearts"),
-            OptionChoice(name="🟣 Ronds", value="circles"),
+        items: str, 
+        emojis: discord.Option(str, "emojis", choices=[
+            discord.OptionChoice(name="1️⃣ Nombres", value="numbers"),
+            discord.OptionChoice(name="❤️ Coeurs", value="hearts"),
+            discord.OptionChoice(name="🟣 Ronds", value="circles"),
         ], default="circles")):
 
         poll = PollData(
