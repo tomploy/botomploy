@@ -1,5 +1,5 @@
 
-FROM arm64v8/python:3
+FROM python:3
 
 RUN mkdir -p /usr/src/bot
 
