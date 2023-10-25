@@ -5,6 +5,7 @@ from discord.commands import slash_command
 
 import os
 import sys
+import json
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
@@ -60,24 +61,23 @@ class Poll(commands.Cog):
             discord.OptionChoice(name="🟣 Ronds", value="circles"),
         ], default="circles")):
 
-        poll = PollData(
-            title,
-            items.split(','),
-            emojis,
-            desc
-        )
-
-        self.polls.append(poll)
-
+        poll = PollData(title, items.split(','), emojis, desc)
         sondage = await ctx.response.send_message(embed=poll.embed)
         message = await sondage.original_response()
-        await poll.add_reactions(message)
+        poll.message = message
+        self.polls.append(poll)
 
+        jsonpoll = json.dumps(self.polls, default=lambda o: o.__dict__, indent=4)
+        with open("poll.json", "w") as outfile:
+            outfile.write(jsonpoll)
+
+        await poll.add_reactions(message)
 
 empty_choice = "n o b o d y"
 class PollData():
-    def __init__(self, title, items, emojis, desc = ""):
+    def __init__(self, message, title, items, emojis, desc = ""):
         self.message = None;
+        self.title = title;
         self.choices = []
         self.embed = discord.Embed(
             title=title,
@@ -120,7 +120,8 @@ class PollData():
             value += f"<@!{member}>\n"
 
         field.value = value if len(self.choices[index]["members"]) > 0 else empty_choice;
-        
+    
+    
 
 def setup(bot):
     bot.add_cog(Poll(bot))
