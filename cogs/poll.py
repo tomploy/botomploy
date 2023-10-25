@@ -38,8 +38,8 @@ class Poll(commands.Cog):
         if(self.bot.user.id == payload.user_id):
             return
 
-        guild = self.bot.get_guild(payload.guild_id);
-        channel = guild.get_channel(payload.channel_id);
+        guild = self.bot.get_guild(payload.guild_id)
+        channel = guild.get_channel(payload.channel_id)
         msg = channel.get_partial_message(payload.message_id)
 
         poll = next(poll for poll in self.polls if poll.message.id == payload.message_id)

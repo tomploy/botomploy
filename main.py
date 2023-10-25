@@ -16,7 +16,7 @@ class Bot(commands.Bot):
 
     async def setup_hook(self):
         await self.tree.sync(guild=discord.Object(serverId))
-        print(f"Synced slash commands for {self.user}.");
+        print(f"Synced slash commands for {self.user}.")
     
         
     
@@ -29,7 +29,7 @@ class Bot(commands.Bot):
 
 intents = discord.Intents.all()
 intents.message_content = True
-bot = Bot(intents=intents, command_prefix="!" );
+bot = Bot(intents=intents)
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
         bot.load_extension(f"cogs.{filename[:-3]}")
