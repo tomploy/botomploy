@@ -5,7 +5,7 @@ from discord.commands import slash_command
 
 import os
 import sys
-import json
+import jsonpickle
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
@@ -67,7 +67,7 @@ class Poll(commands.Cog):
         poll.message = message
         self.polls.append(poll)
 
-        jsonpoll = json.dumps(self.polls, default=lambda o: o.__dict__, indent=4)
+        jsonpoll = jsonpickle.encode(self.polls)
         with open("poll.json", "w") as outfile:
             outfile.write(jsonpoll)
 
