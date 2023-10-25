@@ -75,7 +75,7 @@ class Poll(commands.Cog):
 
 empty_choice = "n o b o d y"
 class PollData():
-    def __init__(self, message, title, items, emojis, desc = ""):
+    def __init__(self, title, items, emojis, desc = ""):
         self.message = None;
         self.title = title;
         self.choices = []
