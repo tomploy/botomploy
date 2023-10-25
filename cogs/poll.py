@@ -81,7 +81,7 @@ class PollData():
         self.choices = []
         self.embed = discord.Embed(
             title=title,
-            color=discord.Color.green(),
+            color=discord.Color.purple(),
             description=desc
         )
         self.emojis = emojis_db[emojis]
