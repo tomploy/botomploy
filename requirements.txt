@@ -10,3 +10,4 @@ py-cord==2.4.0
 python-dotenv==1.0.0
 typing-extensions==4.5.0
 yarl==1.8.2
+jsonpickle==3.0.2
