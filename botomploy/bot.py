@@ -1,4 +1,3 @@
-"""A custom Discord bot that extends the commands.Bot class."""
 import discord
 from discord.ext import commands
 
@@ -15,9 +14,12 @@ class Bot(commands.Bot):
     """
 
     def __init__(self, client_id, server_id, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(command_prefix = "!", *args, **kwargs)
         self.client_id = client_id
-        self.server_id = server_id  
+        self.server_id = server_id
+        self.initial_extensions = [
+            "commands.poll.poll",
+        ]
 
     async def setup_hook(self):
         """
@@ -25,6 +27,10 @@ class Bot(commands.Bot):
         """
         await self.tree.sync(guild=discord.Object(self.server_id))
         print(f"Synced slash commands for {self.user}.")
+
+
+        for ext in self.initial_extensions:
+            await self.load_extension(ext)
     
     async def on_ready(self):
         """

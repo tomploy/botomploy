@@ -1,4 +1,5 @@
 from botomploy import app
+import asyncio
 
 if __name__ == "__main__":
-    app.run()
+    asyncio.run(app.run())

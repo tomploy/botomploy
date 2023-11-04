@@ -1,7 +1,6 @@
+import os
 import discord
 from discord.ext import commands
-# from discord.commands import Option
-# from discord.commands import slash_command
 from poll import PollData
 import settings
 
@@ -11,14 +10,16 @@ class Poll(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.polls = []
-
+        print("loading polls")
+        """ load polls """
         with open(settings.data_path + "poll.json", "r") as infile:
             jsonpoll = infile.read()
             self.polls = jsonpickle.decode(jsonpoll)
-            
+
         super().__init__()
 
     def get_message(self, channel, messaged_id):
+        """ retrieve a message from a channel """
         guild = self.bot.get_guild(self.bot.server_id)
         channel = guild.get_channel(channel)
         return channel.get_partial_message(messaged_id)
@@ -73,7 +74,11 @@ class Poll(commands.Cog):
 
         await poll.add_reactions(message)
 
+    async def cog_load(self):
+        """ load polls """
+        with open("poll.json", "r") as infile:
+            jsonpoll = infile.read()
+            self.polls = jsonpickle.decode(jsonpoll)
 
-
-def setup(bot):
-    bot.add_cog(Poll(bot))
+async def setup(bot):
+    await bot.add_cog(Poll(bot))
