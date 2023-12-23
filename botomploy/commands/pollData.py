@@ -1,18 +1,14 @@
 import discord
-from botomploy.utils.emojis import emojis_db
+from botomploy.utils.emojis import emojis
 
 empty_choice = "n o b o d y"
 class PollData():
-    def __init__(self, title, items, emojis, desc = ""):
-        self.message = None;
-        self.title = title;
+    def __init__(self, title, items, emoji_type, desc = ""):
+        self.message_id = None
+        self.title = title
         self.choices = []
-        self.embed = discord.Embed(
-            title=title,
-            color=discord.Color.purple(),
-            description=desc
-        )
-        self.emojis = emojis_db[emojis]
+        self.desc = desc
+        self.emoji_type = emoji_type
 
         for i in range(len(items)):
             item_dict = {
@@ -20,33 +16,31 @@ class PollData():
                 "members": []
             }
             self.choices.append(item_dict)
-            self.embed.add_field(name=str(self.emojis[i]) + " " + self.choices[i]["item"], value=empty_choice, inline=True)
-
-    async def add_reactions(self, message):
-        self.message = message
-        for i in range(len(self.choices)):
-            await self.message.add_reaction(self.emojis[i])
     
     def add_member(self, emoji, member):
-        index = self.emojis.index(emoji)
-        field = self.embed.fields[index]
+        index = emojis[self.emoji_type].index(emoji)
         self.choices[index]["members"].append(member)
 
-        value = ""
-        for member in self.choices[index]["members"]:
-            value += f"<@!{member}>\n"
-            # value += ">>> <@!{}>\n".format(member)
-        field.value = value;
-
     def remove_member(self, emoji, member):
-        index = self.emojis.index(emoji)
-        field = self.embed.fields[index]
+        index = emojis[self.emoji_type].index(emoji)
         self.choices[index]["members"].remove(member)
 
-        value = ""
-        for member in self.choices[index]["members"]:
-            value += f"<@!{member}>\n"
+    def embed(self):
+        embed = discord.Embed(
+            title=self.title,
+            color=discord.Color.purple(),
+            description=self.desc
+        )
 
-        field.value = value if len(self.choices[index]["members"]) > 0 else empty_choice;
-    
-    
+        i = 0
+        for choices in self.choices:
+            name = str(emojis[self.emoji_type][i]) + " " + choices["item"]
+            embed.add_field(name=name, value="n o b o d y", inline=True)
+
+            value = ""  
+            for member in choices["members"]:
+                value += f"<@!{member}>\n"
+                # value += ">>> <@!{}>\n".format(member)
+                embed.fields[i].value = value
+            i += 1
+        return embed 
