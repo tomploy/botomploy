@@ -1,15 +1,12 @@
 import os
 import discord
 from discord.ext import commands
-from dotenv import load_dotenv
-
 from botomploy.bot import Bot
 
 """ set data path """
 data_path = os.path.join(os.path.dirname(__file__), 'data') 
 
 """ load environment variables """
-load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 server_id = os.getenv("SERVER_ID")
 client_id = os.getenv("CLIENT_ID")
