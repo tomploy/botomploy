@@ -1,5 +1,14 @@
+import os
 import discord
+from dotenv import load_dotenv
 from discord.ext import commands
+
+load_dotenv()
+""" load environment variables """
+token = os.getenv("DISCORD_TOKEN")
+server_id = os.getenv("SERVER_ID")
+client_id = os.getenv("CLIENT_ID")
+
 
 class Bot(commands.Bot):
     """
@@ -18,20 +27,12 @@ class Bot(commands.Bot):
         self.client_id = client_id
         self.server_id = server_id
         self.initial_extensions = [
-            "commands.poll.poll",
+            "botomploy.commands.poll",
         ]
-
-    async def setup_hook(self):
-        """
-        A coroutine that syncs slash commands for the bot.
-        """
-        await self.tree.sync(guild=discord.Object(self.server_id))
-        print(f"Synced slash commands for {self.user}.")
-
-
         for ext in self.initial_extensions:
-            await self.load_extension(ext)
-    
+            self.load_extension(ext)
+            print(f"Loaded {ext}.")
+        
     async def on_ready(self):
         """
         A coroutine that runs when the bot is ready.
@@ -49,4 +50,16 @@ class Bot(commands.Bot):
         error : Exception
             The error raised by the command.
         """
-        await ctx.reply(error, ephemeral = True)
+        await ctx.reply(error)
+
+
+
+def run():
+    """  set discord intents """ 
+    intents = discord.Intents.all()
+    intents.message_content = True
+
+    """ create bot """
+    botomploy = Bot(client_id, server_id, intents=intents)
+    """ run bot """
+    botomploy.run(token)

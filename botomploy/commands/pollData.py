@@ -1,5 +1,5 @@
 import discord
-from utils.emojis import emojis_db
+from botomploy.utils.emojis import emojis_db
 
 empty_choice = "n o b o d y"
 class PollData():

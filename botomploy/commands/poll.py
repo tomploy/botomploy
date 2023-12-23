@@ -1,8 +1,8 @@
 import os
 import discord
 from discord.ext import commands
-from poll import PollData
-import settings
+from botomploy.commands.pollData import PollData
+import botomploy.settings as settings
 
 import jsonpickle
 
@@ -12,7 +12,7 @@ class Poll(commands.Cog):
         self.polls = []
         print("loading polls")
         """ load polls """
-        with open(settings.data_path + "poll.json", "r") as infile:
+        with open(settings.data_path + "/poll.json", "r") as infile:
             jsonpoll = infile.read()
             self.polls = jsonpickle.decode(jsonpoll)
 
@@ -80,5 +80,5 @@ class Poll(commands.Cog):
             jsonpoll = infile.read()
             self.polls = jsonpickle.decode(jsonpoll)
 
-async def setup(bot):
-    await bot.add_cog(Poll(bot))
+def setup(bot):
+    bot.add_cog(Poll(bot))
