@@ -5,6 +5,7 @@ empty_choice = "n o b o d y"
 class PollData():
     def __init__(self, title, items, emoji_type, desc = ""):
         self.message_id = None
+        self.channel_id = None
         self.title = title
         self.choices = []
         self.desc = desc
